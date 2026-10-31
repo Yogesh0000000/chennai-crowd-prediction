@@ -1,9 +1,10 @@
 """
-Chennai Crowd Prediction & Smart Outing Logic
-Comprehensive Chennai landmark directory, dynamic place catalog,
-Timezone Game Zone catalogs, distance calculations, and crowd metrics.
+Chennai Crowd Prediction & Outing Planner - Comprehensive Core Engine
+Full Chennai Landmark Catalogs, Timezone Arcades, Parking Friction, Weather Modes,
+Multi-Hop Routing, and Expense Distribution.
 """
 
+# Exhaustive Chennai Origins / Neighborhoods
 CHENNAI_ORIGINS = [
     "Tambaram", "Guindy", "Anna Nagar", "Chennai Central", "Adyar", "Velachery",
     "T. Nagar", "Avadi", "Porur", "Thiruvanmiyur", "Mylapore", "Nungambakkam",
@@ -13,6 +14,7 @@ CHENNAI_ORIGINS = [
     "Alwarpet", "Besant Nagar", "Thoraipakkam", "Navalur", "Siruseri", "Kotturpuram"
 ]
 
+# Destination Directory with Parking Friction, Weather Tags, and Metro Hacks
 DESTINATIONS = [
     {
         "id": "vr_mall",
@@ -20,24 +22,32 @@ DESTINATIONS = [
         "type": "Mall",
         "zone": "Anna Nagar West",
         "max_capacity": 7500,
-        "description": "Massive lifestyle mall with Timezone Game Zone, PVR Luxe, rooftop cafes, and cultural architecture.",
+        "is_indoor": True,
+        "description": "Massive lifestyle mall with Timezone Game Zone, PVR Luxe, rooftop dining, and cultural courtyard.",
         "best_for": ["Friends", "Couple", "Family", "Single"],
         "couple_friendly": True,
         "vibe_tags": ["Timezone Arcade", "Bowling Alley", "PVR Cinemas", "Aesthetic Courtyard", "Rooftop Cafes"],
-        "transit": {
-            "metro": "Thirumangalam Metro Station (Green Line) - 800m walk",
-            "train": "Villivakkam Suburban Railway (3.5 km)",
-            "bus": "Thirumangalam Junction Bus Stop (Routes: 47D, 27B, 70V, 101)"
+        "parking": {
+            "bike_stress": "Low - Dedicated multi-level two-wheeler ramp (₹20-₹30)",
+            "car_stress": "High - 20-30 min queue at Jawaharlal Nehru Road ramp post 5 PM on weekends",
+            "hack": "Park bike at Thirumangalam Metro for ₹15 and walk 800m if peak Saturday rush"
         },
+        "transit": {
+            "metro": "Thirumangalam Metro (Green Line) - 800m walk or ₹20 share-auto",
+            "train": "Villivakkam Suburban (3.5 km)",
+            "bus": "Thirumangalam Junction Bus Stop (Routes: 47D, 27B, 70V, 101)",
+            "cheat_code": "Take Green line metro to Thirumangalam, exit Gate 2, jump in ₹20 share-auto directly to VR entry"
+        },
+        "event_hype_alert": "Moderate - Heavy weekend movie rush at PVR Luxe during major star film releases.",
         "budget_catalog": [
             {"item": "Timezone Arcade Single Token / Basic Game", "price": 80, "image": "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=300&q=80", "category": "Games"},
-            {"item": "Timezone Air Hockey / Basketball Shootout Match", "price": 120, "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&q=80", "category": "Games"},
+            {"item": "Timezone Air Hockey / Basketball Shootout", "price": 120, "image": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=300&q=80", "category": "Games"},
             {"item": "McDonald's McVeggie / McChicken Value Combo", "price": 199, "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80", "category": "Food"},
-            {"item": "Timezone Bumper Cars Ride (Krazy Kars)", "price": 160, "image": "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=300&q=80", "category": "Games"},
+            {"item": "Timezone Krazy Kars Bumper Ride", "price": 160, "image": "https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=300&q=80", "category": "Games"},
             {"item": "PVR Inox Regular Movie Ticket (Weekday Matinee)", "price": 250, "image": "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=300&q=80", "category": "Cinema"},
             {"item": "Timezone Bowling Alley (1 Full String Game)", "price": 380, "image": "https://images.unsplash.com/photo-1545232979-fbf68fe9b10d?w=300&q=80", "category": "Games"},
-            {"item": "Two Cold Shakes / Frappes (Couple Date)", "price": 340, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300&q=80", "category": "Food"},
-            {"item": "Timezone VR Experience Simulator (9D Ride)", "price": 280, "image": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1df?w=300&q=80", "category": "Games"}
+            {"item": "Timezone VR Experience Simulator (9D Ride)", "price": 280, "image": "https://images.unsplash.com/photo-1622979135225-d2ba269bc1df?w=300&q=80", "category": "Games"},
+            {"item": "Two Cold Frappes at Ground Floor Courtyard", "price": 340, "image": "https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300&q=80", "category": "Food"}
         ],
         "hourly_pattern": {"Morning": 20, "Afternoon": 55, "Evening": 92, "Night": 65}
     },
@@ -47,15 +57,23 @@ DESTINATIONS = [
         "type": "Mall",
         "zone": "Royapettah",
         "max_capacity": 8500,
-        "description": "Centrally located hub featuring Escape Cinemas, gaming arcade, and a multi-cuisine food court.",
+        "is_indoor": True,
+        "description": "Centrally located hub featuring Escape Cinemas, gaming arcade, and multi-cuisine food courts.",
         "best_for": ["Friends", "Couple", "Family", "Single"],
         "couple_friendly": True,
         "vibe_tags": ["Escape Cinemas", "Central Hub", "Food Court", "Arcade Games"],
+        "parking": {
+            "bike_stress": "Moderate - Quick access via Whites Road rear gate (₹20)",
+            "car_stress": "High - Long queues on Pattullos Road during weekend peak hours",
+            "hack": "Avoid Pattullos Road car queue by parking at Thousand Lights Metro parking lot"
+        },
         "transit": {
             "metro": "Thousand Lights Metro (Blue Line Gate 3) - 400m walk",
             "train": "Chennai Central (3 km)",
-            "bus": "Express Avenue / Woods Road Stop (Routes: 21G, 22, 27B)"
+            "bus": "Express Avenue / Woods Road Stop (Routes: 21G, 22, 27B)",
+            "cheat_code": "Get down at Thousand Lights Metro Gate 3, cross Club House Road to enter EA back gate in 4 mins"
         },
+        "event_hype_alert": "Low - Regular commercial flow, no major stadium choke points nearby.",
         "budget_catalog": [
             {"item": "Filter Coffee & Hot Samosas at Food Court", "price": 110, "image": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=300&q=80", "category": "Food"},
             {"item": "McDonald's Extra Value Burger Meal", "price": 185, "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&q=80", "category": "Food"},
@@ -70,18 +88,27 @@ DESTINATIONS = [
         "type": "Mall",
         "zone": "Velachery",
         "max_capacity": 9500,
+        "is_indoor": True,
         "description": "Massive lifestyle mall with IMAX, luxury apparel, bowling alley, and premium dining outlets.",
         "best_for": ["Friends", "Family", "Couple", "Single"],
         "couple_friendly": True,
         "vibe_tags": ["Luxury Shopping", "IMAX Theater", "Bowling & Arcade", "Cozy Cafes"],
-        "transit": {
-            "metro": "Guindy Metro (4 km) + direct feeder share-auto",
-            "train": "Velachery MRTS Railway - 1.8 km",
-            "bus": "Velachery Checkpost / Phoenix Mall Stop (Routes: 570, 119, 5C)"
+        "parking": {
+            "bike_stress": "Moderate - Multi-level basement parking fills up by 6 PM on Sunday",
+            "car_stress": "Severe - Velachery bypass road gets backed up up to 1.5 km on weekends",
+            "hack": "Take share-auto from Guindy Metro rather than driving a car through the Velachery junction choke"
         },
+        "transit": {
+            "metro": "Guindy Metro (4 km) + frequent share autos from Gate 3",
+            "train": "Velachery MRTS Railway - 1.8 km",
+            "bus": "Velachery Checkpost / Phoenix Mall Stop (Routes: 570, 119, 5C)",
+            "cheat_code": "Take Metro to Guindy, walk to Race Course road side, catch the direct ₹20 share-auto to mall drop"
+        },
+        "event_hype_alert": "Moderate - High weekend mall crowd and heavy Velachery traffic bottleneck.",
         "budget_catalog": [
             {"item": "Subway 6-inch Sub Value Combo", "price": 210, "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=300&q=80", "category": "Food"},
-            {"item": "Arcade Card Top-up (3 basic video games)", "price": 300, "image": "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=300&q=80", "category": "Games"}
+            {"item": "Arcade Card Top-up (3 basic video games)", "price": 300, "image": "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=300&q=80", "category": "Games"},
+            {"item": "Two Artisanal Donuts & Hot Coffees", "price": 360, "image": "https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=300&q=80", "category": "Food"}
         ],
         "hourly_pattern": {"Morning": 20, "Afternoon": 62, "Evening": 96, "Night": 74}
     },
@@ -91,20 +118,28 @@ DESTINATIONS = [
         "type": "Beach",
         "zone": "Mylapore / Triplicane",
         "max_capacity": 42000,
+        "is_indoor": False,
         "description": "Iconic Chennai coastline with sea breezes, carnival stalls, fresh fish fry, and lighthouse views.",
         "best_for": ["Family", "Friends", "Single"],
         "couple_friendly": False,
         "vibe_tags": ["Sunset Strolls", "Street Food", "Lighthouse Deck", "Carnival Stalls"],
+        "parking": {
+            "bike_stress": "Low - Open seaside service lane bike parking (₹10-₹20)",
+            "car_stress": "Moderate - Kamarajar Salai service road gets packed near Gandhi Statue post 5 PM",
+            "hack": "Park near Vivekanandar Illam service road stretch for hassle-free exits"
+        },
         "transit": {
             "metro": "Government Estate Metro (1.5 km)",
             "train": "Chepauk / Thiruvallikeni MRTS - 400m walk",
-            "bus": "Marina Beach / Vivekanandar Illam (Routes: 21G, 102, 45B)"
+            "bus": "Marina Beach / Vivekanandar Illam (Routes: 21G, 102, 45B)",
+            "cheat_code": "Take MRTS train to Chepauk station, step directly onto the beach walkway in 3 mins"
         },
+        "event_hype_alert": "High on IPL / Cricket Match Days due to Chepauk MA Chidambaram Stadium next door!",
         "budget_catalog": [
             {"item": "Marina Thenga Manga Pattani Sundal", "price": 30, "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&q=80", "category": "Food"},
             {"item": "Hot Molaga Bajji Plate (4 pcs)", "price": 40, "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=300&q=80", "category": "Food"},
             {"item": "Lighthouse Observation Deck Entry Ticket", "price": 50, "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=300&q=80", "category": "Sightseeing"},
-            {"item": "Fresh Fried Vanjaram Fish Fry Slice", "price": 120, "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&q=80", "category": "Food"}
+            {"item": "Fresh Fried Vanjaram / Nethili Fish Fry Slice", "price": 120, "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=300&q=80", "category": "Food"}
         ],
         "hourly_pattern": {"Morning": 25, "Afternoon": 15, "Evening": 98, "Night": 50}
     },
@@ -114,15 +149,23 @@ DESTINATIONS = [
         "type": "Beach",
         "zone": "Besant Nagar",
         "max_capacity": 15000,
+        "is_indoor": False,
         "description": "A relaxed beach promenade with cozy cafes, the Schmidt Memorial, and romantic sunset breezes.",
         "best_for": ["Couple", "Friends", "Family", "Single"],
         "couple_friendly": True,
-        "vibe_tags": ["Romantic Sunset", "Café Culture", "Schmidt Memorial", "Breezy Walk"],
-        "transit": {
-            "metro": "Nandanam Metro (6 km) + bus or cab",
-            "train": "Kasturba Nagar MRTS - 2.8 km",
-            "bus": "Besant Nagar Bus Terminus (Routes: 29C, 23C, M1)"
+        "vibe_tags": ["Romantic Sunset", "Cafe Culture", "Schmidt Memorial", "Breezy Walk"],
+        "parking": {
+            "bike_stress": "Moderate - Beach promenade parking fills quickly on weekend evenings (₹20)",
+            "car_stress": "Severe - 6th Avenue gridlocks easily, finding a car slot takes 20+ mins",
+            "hack": "Park 2 streets inside near 4th Main Road residential area and walk 3 mins to sand"
         },
+        "transit": {
+            "metro": "Nandanam Metro (6 km) + cab / share-auto",
+            "train": "Kasturba Nagar MRTS - 2.8 km",
+            "bus": "Besant Nagar Bus Terminus (Routes: 29C, 23C, M1)",
+            "cheat_code": "Take 29C directly from central nodes to Besant Nagar Terminus, only 200m walk to the promenade"
+        },
+        "event_hype_alert": "Low - Clean weekend vibes with heavy food court rush post 6 PM.",
         "budget_catalog": [
             {"item": "Roasted Sweet Corn & Fresh Tender Coconut", "price": 60, "image": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=300&q=80", "category": "Food"},
             {"item": "Belgian Chocolate Waffle Stick", "price": 120, "image": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?w=300&q=80", "category": "Food"},
@@ -136,15 +179,23 @@ DESTINATIONS = [
         "type": "Park & Lake",
         "zone": "Chetpet",
         "max_capacity": 3200,
+        "is_indoor": False,
         "description": "Scenic urban lake offering pedal boat rides, tranquil walking paths, and peaceful greenery.",
         "best_for": ["Couple", "Single", "Family"],
         "couple_friendly": True,
         "vibe_tags": ["Lakefront Boating", "Quiet Walk", "Romantic Scenery", "Greenery"],
+        "parking": {
+            "bike_stress": "Low - Plentiful two-wheeler parking inside gate",
+            "car_stress": "Low to Moderate - Official parking lot available by EVR Periyar Salai side",
+            "hack": "Always park inside the designated Eco Park gate to avoid traffic police towing on main road"
+        },
         "transit": {
             "metro": "Nehru Park Metro (1.2 km) / Kilpauk Metro (1.5 km)",
-            "train": "Chetpet Suburban Railway - 300m walk",
-            "bus": "Chetpet Bus Stop (Routes: 27B, 29C, 47D)"
+            "train": "Chetpet Suburban Railway - 300m walk (3 mins)",
+            "bus": "Chetpet Bus Stop (Routes: 27B, 29C, 47D)",
+            "cheat_code": "Take suburban train to Chetpet station; the lake pedestrian entrance is right outside platform 2"
         },
+        "event_hype_alert": "Low - Serene and peaceful all week.",
         "budget_catalog": [
             {"item": "Eco Park Walking Entry Ticket", "price": 30, "image": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=300&q=80", "category": "Entry"},
             {"item": "Pedal Boating 30-min Ticket (2-seater ride)", "price": 150, "image": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=300&q=80", "category": "Activities"},
@@ -158,15 +209,23 @@ DESTINATIONS = [
         "type": "Park & Garden",
         "zone": "Cathedral Road",
         "max_capacity": 3500,
+        "is_indoor": False,
         "description": "Lush botanical gardens with rare flora, shaded pathways, duck pond, and romantic seating.",
         "best_for": ["Couple", "Single", "Family"],
         "couple_friendly": True,
         "vibe_tags": ["Botanical Trails", "Quiet Romance", "Green Canopy", "Photo Spots"],
-        "transit": {
-            "metro": "AG-DMS Metro Station (Blue Line) - 500m walk",
-            "train": "Chennai Central (4 km)",
-            "bus": "Gemini Flyover / Cathedral Road Stop (Routes: 23C, 21G, 18A)"
+        "parking": {
+            "bike_stress": "Low - Plenty of tree-shaded two-wheeler parking near gate (₹15)",
+            "car_stress": "Moderate - Limited slots inside, street parking along Cathedral Road is monitored",
+            "hack": "Take Metro to AG-DMS and walk across the flyover for stress-free arrival"
         },
+        "transit": {
+            "metro": "AG-DMS Metro Station (Blue Line) - 500m walk (6 mins)",
+            "train": "Chennai Central (4 km)",
+            "bus": "Gemini Flyover / Cathedral Road Stop (Routes: 23C, 21G, 18A)",
+            "cheat_code": "Get down at AG-DMS Metro station Gate 1; it is a 5-minute shaded walk past Anna Flyover"
+        },
+        "event_hype_alert": "Low - Peaceful green retreat in the heart of central Chennai.",
         "budget_catalog": [
             {"item": "Botanical Garden Walking Ticket", "price": 25, "image": "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=300&q=80", "category": "Entry"},
             {"item": "Couple Entry + Camera Photography Pass", "price": 100, "image": "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=300&q=80", "category": "Activities"},
@@ -175,6 +234,8 @@ DESTINATIONS = [
         "hourly_pattern": {"Morning": 20, "Afternoon": 12, "Evening": 55, "Night": 10}
     }
 ]
+
+# Destination Coordinates for Distance Matrix
 COORDINATES = {
     "Tambaram": (12.9249, 80.1000), "Guindy": (13.0067, 80.2025),
     "Anna Nagar": (13.0850, 80.2100), "Chennai Central": (13.0827, 80.2707),
@@ -250,12 +311,12 @@ def estimate_crowd_metrics(destination: dict, is_weekend: bool, preferred_time: 
         "tier": tier,
         "badge_color": badge_color,
         "occupancy_pct": load_pct,
-        "estimated_headcount": f"{low_bound:,} - {high_bound:,}",
+        "estimated_headcount": "%s - %s" % (f"{low_bound:,}", f"{high_bound:,}"),
         "summary": summary
     }
 
 
-def get_recommendations(is_weekend: bool, preferred_time: str, group: str, place_type: str = "Any") -> list:
+def get_recommendations(is_weekend: bool, preferred_time: str, group: str, place_type: str = "Any", weather_pref: str = "Any") -> list:
     matched = []
     for dest in DESTINATIONS:
         if group == "Couple":
@@ -265,6 +326,11 @@ def get_recommendations(is_weekend: bool, preferred_time: str, group: str, place
             continue
 
         if place_type != "Any" and dest["type"] != place_type:
+            continue
+
+        if weather_pref == "AC Indoor Only" and not dest.get("is_indoor", False):
+            continue
+        elif weather_pref == "Open Air / Breezy" and dest.get("is_indoor", False):
             continue
 
         crowd_data = estimate_crowd_metrics(dest, is_weekend, preferred_time)
